@@ -14,6 +14,11 @@
 
 ```bash
 cp .envrc.sample .envrc
+```
+
+Add your `RAILS_MASTER_KEY` to `.envrc` (provided separately by the project owner).
+
+```bash
 direnv allow
 ```
 
@@ -59,6 +64,10 @@ just console           # Start Rails console
 just sidekiq           # Start Sidekiq worker
 just test              # Run test suite (RSpec)
 just test-failures     # Re-run only failed tests
+just lint              # Run RuboCop linter
+just lint-fix          # Run RuboCop with auto-correct
+just security          # Run Brakeman security scanner
+just ci                # Run all checks locally (lint + security + tests)
 just redis-cli         # Open Redis CLI
 just redis-flush       # Flush Redis cache
 ```

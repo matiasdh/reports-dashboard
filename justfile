@@ -86,6 +86,23 @@ test *args='':
 test-failures:
     bundle exec rspec --only-failures
 
+# ─── Code Quality ─────────────────────────────────────────────────────
+
+# Run RuboCop linter
+lint:
+    bin/rubocop
+
+# Run RuboCop with auto-correct
+lint-fix:
+    bin/rubocop -A
+
+# Run Brakeman security scanner
+security:
+    bin/brakeman --no-pager
+
+# Run all checks locally (same as CI)
+ci: lint security test
+
 # ─── Redis ────────────────────────────────────────────────────────────
 
 # Open Redis CLI
