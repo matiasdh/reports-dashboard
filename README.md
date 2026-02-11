@@ -72,6 +72,14 @@ just redis-cli         # Open Redis CLI
 just redis-flush       # Flush Redis cache
 ```
 
+## Report Data
+
+Report data is fetched via `ReportData::Reports.fetch(report_type)`. The current implementation uses **mocked classes** (Faker-generated data) under `app/services/report_data/reports/`. These can be swapped for real implementations (e.g. database queries, external APIs) without changing the caller. Just replace the fetcher classes behind the same interface.
+
+**Report types:** `daily_sales`, `monthly_summary`, `inventory_snapshot`
+
+**Monetary values:** All prices and totals are returned as **integers in cents** (e.g. the last two digits are the cents part, so `1299` = $12.99). The system assumes a single currency (**USD**). This format is compatible with the [money-rails](https://github.com/RubyMoney/money-rails) gem if we need it.
+
 ## Design Trade-offs
 
 - **Report uniqueness constraint:** The auto-generated `code` field (`REPORT_TYPE-YYYYMMDD-USERID`) inherently encodes the user, report type, and date. A single unique index on `code` is sufficient to enforce the one-report-per-type-per-user-per-day rule, avoiding the need for a multi-column composite index.
