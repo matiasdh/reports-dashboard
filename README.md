@@ -57,7 +57,8 @@ just db-console        # Open PostgreSQL console
 just server            # Start Rails server
 just console           # Start Rails console
 just sidekiq           # Start Sidekiq worker
-just test              # Run test suite
+just test              # Run test suite (RSpec)
+just test-failures     # Re-run only failed tests
 just redis-cli         # Open Redis CLI
 just redis-flush       # Flush Redis cache
 ```

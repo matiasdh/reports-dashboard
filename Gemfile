@@ -50,6 +50,15 @@ group :development, :test do
 
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
+
+  # RSpec for testing [https://github.com/rspec/rspec-rails]
+  gem "rspec-rails", "~> 8.0"
+
+  # Factories for test data [https://github.com/thoughtbot/factory_bot_rails]
+  gem "factory_bot_rails", "~> 6.5"
+
+  # Generate fake data for tests [https://github.com/faker-ruby/faker]
+  gem "faker", "~> 3.6"
 end
 
 group :development do
@@ -61,4 +70,13 @@ group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara"
   gem "selenium-webdriver"
+
+  # Database cleaning between tests [https://github.com/DatabaseCleaner/database_cleaner]
+  gem "database_cleaner-active_record", "~> 2.2"
+
+  # One-liner matchers for common Rails tests [https://github.com/thoughtbot/shoulda-matchers]
+  gem "shoulda-matchers", "~> 7.0"
+
+  # Stub HTTP requests in tests [https://github.com/bblimke/webmock]
+  gem "webmock", "~> 3.26"
 end

@@ -80,7 +80,11 @@ sidekiq:
 
 # Run the full test suite
 test *args='':
-    bin/rails test {{ args }}
+    bundle exec rspec {{ args }}
+
+# Run only previously failed tests
+test-failures:
+    bundle exec rspec --only-failures
 
 # ─── Redis ────────────────────────────────────────────────────────────
 
