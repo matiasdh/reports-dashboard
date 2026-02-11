@@ -6,48 +6,65 @@
 - PostgreSQL 17
 - Redis 7
 - [direnv](https://direnv.net/)
+- [just](https://github.com/casey/just)
 
 ## Setup
 
-### 1. Start services
-
-```bash
-docker compose up -d
-```
-
-This starts PostgreSQL (port 5432) and Redis (port 6379).
-
-### 2. Environment variables
+### 1. Environment variables
 
 ```bash
 cp .envrc.sample .envrc
 direnv allow
 ```
 
-Edit `.envrc` if you need to customize any values.
-
-### 3. Database
+### 2. Full setup (services + dependencies + database)
 
 ```bash
-bin/rails db:setup
+just setup
 ```
 
-### 4. Run the app
+This runs `docker compose up -d`, `bundle install`, and `rails db:setup`.
+
+### 3. Run the app
 
 ```bash
-bin/rails server
+just server
 ```
 
-### 5. Background jobs (Sidekiq)
+### 4. Background jobs
 
 ```bash
-bundle exec sidekiq
+just sidekiq
+```
+
+## Available commands
+
+Run `just` to see all available recipes:
+
+```
+just                   # List all commands
+just setup             # Full project setup from scratch
+just services-up       # Start infrastructure (PostgreSQL + Redis)
+just services-down     # Stop infrastructure
+just services-status   # Show services status
+just services-logs     # Follow services logs
+just services-nuke     # Remove services and volumes (destructive)
+just db-setup          # Create, migrate, and seed
+just db-migrate        # Run pending migrations
+just db-rollback       # Rollback last migration
+just db-reset          # Drop, create, migrate, seed
+just db-console        # Open PostgreSQL console
+just server            # Start Rails server
+just console           # Start Rails console
+just sidekiq           # Start Sidekiq worker
+just test              # Run test suite
+just redis-cli         # Open Redis CLI
+just redis-flush       # Flush Redis cache
 ```
 
 ## Services
 
-| Service    | Purpose                          | Default URL                  |
-|------------|----------------------------------|------------------------------|
-| PostgreSQL | Database                         | localhost:5432               |
-| Redis      | Cache, Action Cable, Sidekiq     | redis://localhost:6379/0     |
-| Sidekiq    | Background job processing        | http://localhost:3000/sidekiq (if mounted) |
+| Service    | Purpose                      | Default URL              |
+|------------|------------------------------|--------------------------|
+| PostgreSQL | Database                     | localhost:5432           |
+| Redis      | Cache, Action Cable, Sidekiq | redis://localhost:6379/0 |
