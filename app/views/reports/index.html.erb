@@ -1,0 +1,40 @@
+<h1>Reports</h1>
+
+<%= form_with model: Report.new, url: reports_path do |f| %>
+  <div>
+    <%= f.label :user_id, "User" %>
+    <%= f.collection_select :user_id, User.order(:name), :id, :name, prompt: "Select a user" %>
+  </div>
+
+  <div>
+    <%= f.label :report_type, "Report type" %>
+    <%= f.select :report_type, Report.report_types.keys.map { |t| [t.humanize, t] }, prompt: "Select a type" %>
+  </div>
+
+  <div>
+    <%= f.submit "Generate report" %>
+  </div>
+<% end %>
+
+<table>
+  <thead>
+    <tr>
+      <th>Code</th>
+      <th>Type</th>
+      <th>Status</th>
+      <th>User</th>
+      <th>Created at</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @reports.each do |report| %>
+      <tr>
+        <td><%= report.code %></td>
+        <td><%= report.report_type.humanize %></td>
+        <td><%= report.status %></td>
+        <td><%= report.user.name %></td>
+        <td><%= report.created_at.strftime("%Y-%m-%d %H:%M") %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

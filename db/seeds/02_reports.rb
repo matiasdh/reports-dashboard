@@ -1,19 +1,24 @@
-now = Time.current
-today = Date.current
-users = User.all
+Faker::Config.random = Random.new(43)
 
 report_types = Report.report_types.keys
+records = []
 
-records = users.flat_map do |user|
-  report_types.map do |type|
-    code = "#{type.upcase}-#{today.strftime('%Y%m%d')}-#{user.id}"
-    {
+User.find_each do |user|
+  report_types.each do |type|
+    date_time = Faker::Time.between(
+      from: Date.new(2026, 1, 1).to_time,
+      to: Date.new(2026, 1, 31).to_time
+    )
+    date_str = date_time.utc.to_date.strftime("%Y%m%d")
+    code = "#{type.upcase}-#{date_str}-#{user.id}"
+
+    records << {
       user_id: user.id,
       code: code,
       status: Report.statuses.values.sample,
       report_type: Report.report_types[type],
-      created_at: now,
-      updated_at: now
+      created_at: date_time,
+      updated_at: date_time
     }
   end
 end
