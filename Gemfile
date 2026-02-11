@@ -80,3 +80,5 @@ group :test do
   # Stub HTTP requests in tests [https://github.com/bblimke/webmock]
   gem "webmock", "~> 3.26"
 end
+
+gem "tailwindcss-rails", "~> 4.4"
