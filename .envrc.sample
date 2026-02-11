@@ -10,3 +10,6 @@ export REDIS_URL=redis://localhost:6379/0
 # Rails
 export RAILS_ENV=development
 export RAILS_MAX_THREADS=5
+
+# Add binstubs to PATH (avoids bundle exec)
+PATH_add bin
