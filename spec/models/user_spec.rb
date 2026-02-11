@@ -7,6 +7,10 @@ RSpec.describe User, type: :model do
     end
   end
 
+  describe "associations" do
+    it { is_expected.to have_many(:reports).dependent(:destroy) }
+  end
+
   describe "validations" do
     subject { build(:user) }
 
