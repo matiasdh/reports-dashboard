@@ -25,8 +25,11 @@ Rails.application.configure do
     config.action_controller.perform_caching = false
   end
 
-  # Change to :null_store to avoid any caching.
-  config.cache_store = :memory_store
+  # Use Redis as the cache store.
+  config.cache_store = :redis_cache_store, {
+    url: ENV.fetch("REDIS_URL", "redis://localhost:6379/0"),
+    expires_in: 1.hour
+  }
 
   # Store uploaded files on the local file system (see config/storage.yml for options).
   config.active_storage.service = :local
@@ -51,6 +54,9 @@ Rails.application.configure do
 
   # Append comments with runtime information tags to SQL queries in logs.
   config.active_record.query_log_tags_enabled = true
+
+  # Use Sidekiq for background job processing (backed by Redis).
+  config.active_job.queue_adapter = :sidekiq
 
   # Highlight code that enqueued background job in logs.
   config.active_job.verbose_enqueue_logs = true
