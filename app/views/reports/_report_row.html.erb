@@ -1,14 +1,22 @@
 <tr id="<%= dom_id(report) %>" class="group hover:bg-slate-50/80 transition-colors <%= 'animate-fade-out-background' if report.previously_new_record? %>">
   <td class="px-6 py-4 text-slate-600 text-sm"><%= report_type_label(report) %></td>
   <td class="px-6 py-4">
-    <%= tag.span report.status.humanize,
-      class: status_badge_class(report.status) %>
+    <%= status_badge_html(report) %>
   </td>
   <td class="px-6 py-4 text-slate-600 text-sm"><%= report.user.name %></td>
   <td class="px-6 py-4 text-slate-500 text-sm"><%= report_formatted_created_at(report) %></td>
-  <td class="px-6 py-4">
+  <td class="px-6 py-4 text-right">
     <% if report.downloadable? %>
-      <%= link_to "Download", download_report_path(report), class: "text-sky-600 hover:text-sky-700 text-sm font-medium" %>
+      <%= link_to download_report_path(report),
+          class: "inline-flex items-center gap-1.5 px-3 py-1.5 bg-white border border-slate-200 text-slate-700 text-sm font-medium rounded-lg hover:bg-slate-50 hover:text-slate-900 focus:outline-none focus:ring-2 focus:ring-slate-200 transition-colors shadow-sm no-underline",
+          data: { turbo_frame: "_top" } do %>
+        <svg class="size-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+        </svg>
+        Download
+      <% end %>
+    <% else %>
+      <span class="text-slate-400 text-sm italic">Not available</span>
     <% end %>
   </td>
 </tr>

@@ -7,12 +7,15 @@ class GenerateReportService
 
   def call
     report.processing!
+    broadcast_report_update!
     fetch_data!
     generate_pdf!
     mark_completed!
+    broadcast_report_update!
     success
   rescue StandardError => e
     mark_failed!(e)
+    broadcast_report_update!
     failure(e)
   end
 
@@ -52,5 +55,14 @@ class GenerateReportService
 
   def failure(error)
     OpenStruct.new(success?: false, report: report, error: error)
+  end
+
+  def broadcast_report_update!
+    Turbo::StreamsChannel.broadcast_replace_to(
+      "reports",
+      target: report,
+      partial: "reports/report_row",
+      locals: { report: report }
+    )
   end
 end
