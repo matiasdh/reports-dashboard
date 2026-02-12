@@ -1,40 +1,18 @@
-<h1>Reports</h1>
+<div class="space-y-10">
+  <header class="flex sm:flex-row flex-col sm:justify-between sm:items-end gap-1">
+    <div>
+      <h1 class="font-semibold text-slate-900 text-2xl tracking-tight">Reports</h1>
+      <p class="mt-0.5 text-slate-500 text-sm">Generate and view async reports.</p>
+    </div>
+  </header>
 
-<%= form_with model: Report.new, url: reports_path do |f| %>
-  <div>
-    <%= f.label :user_id, "User" %>
-    <%= f.collection_select :user_id, User.order(:name), :id, :name, prompt: "Select a user" %>
-  </div>
+  <%= render "reports/report_form_section", report: @report %>
 
-  <div>
-    <%= f.label :report_type, "Report type" %>
-    <%= f.select :report_type, Report.report_types.keys.map { |t| [t.humanize, t] }, prompt: "Select a type" %>
-  </div>
+  <section class="bg-white shadow-sm border border-slate-200/60 rounded-2xl ring-1 ring-slate-900/5 overflow-hidden">
+    <div class="px-6 py-4 border-slate-100 border-b">
+      <h2 class="font-medium text-slate-500 text-sm uppercase tracking-wider">Recent reports</h2>
+    </div>
 
-  <div>
-    <%= f.submit "Generate report" %>
-  </div>
-<% end %>
-
-<table>
-  <thead>
-    <tr>
-      <th>Code</th>
-      <th>Type</th>
-      <th>Status</th>
-      <th>User</th>
-      <th>Created at</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @reports.each do |report| %>
-      <tr>
-        <td><%= report.code %></td>
-        <td><%= report.report_type.humanize %></td>
-        <td><%= report.status %></td>
-        <td><%= report.user.name %></td>
-        <td><%= report.created_at.strftime("%Y-%m-%d %H:%M") %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+    <%= render "reports/reports_table", reports: @reports %>
+  </section>
+</div>

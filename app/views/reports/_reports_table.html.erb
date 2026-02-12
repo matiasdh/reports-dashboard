@@ -1,0 +1,14 @@
+<div id="reports_table">
+  <div class="overflow-x-auto">
+    <table class="min-w-full">
+      <%= render "reports/reports_table_header" %>
+      <tbody class="divide-y divide-slate-100" id="reports_tbody">
+        <% if reports.any? %>
+          <%= render partial: "reports/report_row", collection: reports, as: :report %>
+        <% else %>
+          <%= render "reports/reports_empty_row" %>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
