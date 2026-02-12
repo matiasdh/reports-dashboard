@@ -4,16 +4,14 @@ Grover.configure do |config|
     margin: {
       top: "1cm",
       right: "1cm",
-      bottom: "1.5cm",  # Space for footer with page numbers
+      bottom: "1cm",
       left: "1cm"
     },
-    display_header_footer: true,
-    footer_template: "<div style='font-size:10px;text-align:center;width:100%;'>Page <span class='pageNumber'></span> of <span class='totalPages'></span></div>",
     emulate_media: "print",
     wait_until: "networkidle0"
   }
   # Use remote Chrome in Docker when GROVER_CHROME_WS_URL is set
-  # Local dev: ws://localhost:3001 (docker-compose chrome service)
+  # Local dev: ws://localhost:3000 (docker-compose chrome service)
   # Production: ws://chrome:3000 (when app and chrome share a network)
   if (ws_url = ENV["GROVER_CHROME_WS_URL"]).present?
     options[:browser_ws_endpoint] = ws_url
