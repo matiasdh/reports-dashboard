@@ -10,17 +10,5 @@
 
   <%= render "reports/report_form_section", report: @report %>
 
-  <section class="bg-white shadow-sm border border-slate-200/60 rounded-2xl ring-1 ring-slate-900/5 overflow-hidden">
-    <div class="px-6 py-4 border-slate-100 border-b">
-      <h2 class="font-medium text-slate-500 text-sm uppercase tracking-wider">Recent reports</h2>
-    </div>
-
-    <%= render "reports/reports_table", reports: @reports %>
-
-    <% if @pagy.pages > 1 %>
-      <div class="px-6 py-4 border-slate-100 border-t">
-        <%== @pagy.series_nav(id: "pagy-reports", aria_label: "Reports pages", slots: 7) %>
-      </div>
-    <% end %>
-  </section>
+  <%= render "reports/reports_list_frame", reports: @reports, pagy: @pagy %>
 </div>

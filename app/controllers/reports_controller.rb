@@ -2,6 +2,8 @@ class ReportsController < ApplicationController
   def index
     @pagy, @reports = pagy(:countish, Report.includes(:user).order(created_at: :desc))
     @report = Report.new(user_id: params[:user_id], report_type: params[:report_type])
+
+    render partial: "reports/reports_list_frame", locals: { reports: @reports, pagy: @pagy }, layout: false if turbo_frame_request?
   end
 
   def download
