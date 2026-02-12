@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "./pagy.css";
 
 @theme {
   --animate-fade-out-background: fade-out-background 2s ease-out forwards;
