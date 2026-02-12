@@ -7,7 +7,7 @@
     <%= render "reports/reports_table", reports: reports %>
 
     <% if pagy.pages > 1 %>
-      <div class="px-6 py-4 border-slate-100 border-t">
+      <div class="px-6 py-4 border-slate-100 border-t flex justify-end">
         <%== pagy.series_nav(id: "pagy-reports", aria_label: "Reports pages", slots: 7, anchor_string: 'data-turbo-frame="reports_list"') %>
       </div>
     <% end %>
