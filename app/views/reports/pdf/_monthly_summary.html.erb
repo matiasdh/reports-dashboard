@@ -1,20 +1,20 @@
 <% d = local_assigns[:data] %>
 <p><strong>Month:</strong> <%= d["month"] %></p>
-<p><strong>Orders:</strong> <%= d["orders_count"] %> · <strong>Revenue:</strong> $<%= "%.2f" % (d["revenue_cents"] / 100.0) %></p>
+<p><strong>Orders:</strong> <%= d["orders_count"] %> · <strong>Revenue:</strong> <span class="inline-amount"><%= format_currency_html(d["revenue_cents"]) %></span></p>
 <h2>Orders</h2>
 <% d["orders"].each do |order| %>
   <table>
-    <tr><th>Order ID</th><td><%= order["order_id"] %></td><th>Date</th><td><%= order["date"] %></td><th class="amount">Amount</th><td class="amount">$<%= "%.2f" % (order["amount_cents"] / 100.0) %></td></tr>
+    <tr><th>Order ID</th><td><%= order["order_id"] %></td><th>Date</th><td><%= order["date"] %></td><th class="amount">Amount</th><td class="amount"><%= format_currency_html(order["amount_cents"]) %></td></tr>
   </table>
   <table>
-    <thead><tr><th>Product</th><th>Qty</th><th class="amount">Unit Price</th><th class="amount">Total</th></tr></thead>
+    <thead><tr><th>Product</th><th class="quantity">Qty</th><th class="amount">Unit Price</th><th class="amount">Total</th></tr></thead>
     <tbody>
       <% order["items"].each do |item| %>
         <tr>
           <td><%= item["product"] %></td>
-          <td><%= item["quantity"] %></td>
-          <td class="amount">$<%= "%.2f" % (item["unit_price_cents"] / 100.0) %></td>
-          <td class="amount">$<%= "%.2f" % (item["total_cents"] / 100.0) %></td>
+          <td class="quantity"><%= format_quantity_html(item["quantity"]) %></td>
+          <td class="amount"><%= format_currency_html(item["unit_price_cents"]) %></td>
+          <td class="amount"><%= format_currency_html(item["total_cents"]) %></td>
         </tr>
       <% end %>
     </tbody>
