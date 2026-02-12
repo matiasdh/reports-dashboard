@@ -22,7 +22,7 @@ RSpec.describe Report, type: :model do
   describe "enums" do
     it {
       is_expected.to define_enum_for(:status)
-        .with_values(pending: 0, processing: 1, completed: 2, failed: 3)
+        .with_values(pending: 0, processing: 1, completed: 2, failed: 3, fetching_data: 4)
     }
 
     it {
