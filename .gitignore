@@ -38,5 +38,8 @@
 # RSpec persistence file
 /spec/examples.txt
 
+# Node dependencies (puppeteer-core for Grover)
+/node_modules
+
 /app/assets/builds/*
 !/app/assets/builds/.keep
