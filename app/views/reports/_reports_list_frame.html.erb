@@ -4,7 +4,7 @@
       <h2 class="font-medium text-slate-500 text-sm uppercase tracking-wider">Recent reports</h2>
     </div>
 
-    <%= render "reports/reports_table", reports: reports %>
+    <%= render "reports/reports_table", reports: reports, pagy: pagy %>
 
     <div class="flex justify-between items-center gap-4 px-6 py-4 border-slate-100 border-t">
       <% if pagy.count.positive? %>

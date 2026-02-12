@@ -87,6 +87,26 @@ RSpec.describe Report, type: :model do
     end
   end
 
+  describe ".with_associations" do
+    it "returns a relation" do
+      expect(described_class.with_associations).to be_a(ActiveRecord::Relation)
+    end
+
+    it "is chainable with order" do
+      expect(described_class.with_associations.order(created_at: :desc)).to be_a(ActiveRecord::Relation)
+    end
+
+    it "calls includes(:user, pdf_attachment: [])" do
+      relation = described_class.all
+      allow(described_class).to receive(:all).and_return(relation)
+      allow(relation).to receive(:includes).with(:user, pdf_attachment: []).and_return(relation)
+
+      described_class.with_associations
+
+      expect(relation).to have_received(:includes).with(:user, pdf_attachment: [])
+    end
+  end
+
   describe "#download_filename" do
     let(:report) { create(:report, code: "DAILY_SALES-20260212-1") }
 

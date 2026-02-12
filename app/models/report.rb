@@ -2,6 +2,8 @@ class Report < ApplicationRecord
   belongs_to :user
   has_one_attached :pdf
 
+  scope :with_associations, -> { includes(:user, pdf_attachment: []) }
+
   enum :status, { pending: 0, processing: 1, completed: 2, failed: 3 }
   enum :report_type, { daily_sales: 0, monthly_summary: 1, inventory_snapshot: 2 }
 
