@@ -3,7 +3,7 @@ name: CI
 on:
   pull_request:
   push:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   scan_ruby:
@@ -56,6 +56,14 @@ jobs:
   test:
     runs-on: ubuntu-latest
 
+    env:
+      RAILS_ENV: test
+      DB_HOST: localhost
+      DB_PORT: 5432
+      DB_USERNAME: postgres
+      DB_PASSWORD: postgres
+      REDIS_URL: redis://localhost:6379/0
+
     services:
       postgres:
         image: postgres:17
@@ -85,14 +93,10 @@ jobs:
           ruby-version: .ruby-version
           bundler-cache: true
 
+      - name: Sync rails_icons
+        run: bin/rails generate rails_icons:sync
+
       - name: Run tests
-        env:
-          RAILS_ENV: test
-          DB_HOST: localhost
-          DB_PORT: 5432
-          DB_USERNAME: postgres
-          DB_PASSWORD: postgres
-          REDIS_URL: redis://localhost:6379/0
         run: bin/rails db:test:prepare && bundle exec rspec
 
       - name: Keep screenshots from failed system tests
