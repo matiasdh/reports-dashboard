@@ -4,7 +4,8 @@ class ReportsController < ApplicationController
   end
 
   def create
-    Report.create!(report_params)
+    report = Report.create!(report_params)
+    GenerateReportJob.perform_later(report.id)
     redirect_to reports_path, notice: "Report queued successfully."
   end
 

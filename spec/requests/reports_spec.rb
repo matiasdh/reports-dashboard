@@ -35,6 +35,12 @@ RSpec.describe "Reports", type: :request do
       expect(response.body).to include("Report queued successfully.")
     end
 
+    it "enqueues GenerateReportJob" do
+      expect {
+        post reports_path, params: { report: { user_id: user.id, report_type: "daily_sales" } }
+      }.to have_enqueued_job(GenerateReportJob)
+    end
+
     it "redirects with an alert for duplicate user + type + day" do
       create(:report, user: user, report_type: :daily_sales)
 
