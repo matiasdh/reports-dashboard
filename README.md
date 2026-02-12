@@ -89,6 +89,10 @@ Report data is fetched via `ReportData::Reports.fetch(report_type)`. The current
 
 - **Integer enums vs PostgreSQL native enums:** Report `status` and `report_type` use Rails integer-backed enums instead of PostgreSQL native enum types. PG enums are self-documenting at the DB level and provide type safety, but require migrations to add or modify values. For the simplicity of this project, integer-backed enums are the right choice. They are easy to evolve, well-supported by Rails, and adding a new report type is a one-line change in the model with no migration needed.
 
+## Icons
+
+- **Rails Icons + Heroicons:** For status badges and buttons (e.g. the spinning *Processing* label, **Generate**, and **Download**) we use the [`rails_icons`](https://github.com/Rails-Designer/rails_icons) gem. It gives us a simple, consistent `icon` helper with first-class support for **Heroicons** and an **animated** icon library (used for the loading spinner), without having to maintain our own SVG sprite system. Long-term, a fully custom icon helper + partials would be the most flexible option, but `rails_icons` strikes a good balance between maintainability and simplicity for this app.
+
 ## Services
 
 | Service    | Purpose                      | Default URL              |
