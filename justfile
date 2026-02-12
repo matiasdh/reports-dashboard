@@ -8,10 +8,15 @@ default:
 setup: services-up install db-setup
     @echo "Setup complete!"
 
-# Install Ruby and Node dependencies (puppeteer-core for Grover PDF generation)
+# Install Ruby, Node, and Rails Icons dependencies (puppeteer-core for Grover PDF generation)
 install:
     bundle install
     npm install
+    just icons-sync
+
+# Sync rails_icons SVG assets (heroicons, animated)
+icons-sync:
+    bin/rails generate rails_icons:sync
 
 # ─── Services (Docker Compose) ───────────────────────────────────────
 

@@ -29,7 +29,7 @@ direnv allow
 just setup
 ```
 
-This runs `docker compose up -d`, `bundle install`, and `rails db:setup`.
+This runs `just services-up`, `just install`, and `just db-setup`.
 
 ### 3. Run the app
 
@@ -50,8 +50,10 @@ Run `just` to see all available recipes:
 ```
 just                   # List all commands
 just setup             # Full project setup from scratch
-just services-up       # Start infrastructure (PostgreSQL + Redis)
+just services-up       # Start infrastructure (PostgreSQL + Redis + Chrome)
 just services-down     # Stop infrastructure
+just install           # Install dependencies (bundle, npm, rails_icons sync)
+just icons-sync        # Sync rails_icons SVG assets (heroicons, animated)
 just services-status   # Show services status
 just services-logs     # Follow services logs
 just services-nuke     # Remove services and volumes (destructive)
@@ -101,6 +103,6 @@ Report data is fetched via `ReportData::Reports.fetch(report_type)`. The current
 | Redis      | Cache, Action Cable, Sidekiq | redis://localhost:6379/0 |
 | Chrome     | PDF generation (Grover)      | ws://localhost:3000      |
 
-**PDF generation:** Grover uses Puppeteer to connect to a headless Chrome instance. Chrome runs in Docker; the app uses `puppeteer-core` (no local Chromium). Set `GROVER_CHROME_WS_URL=ws://localhost:3000` in `.envrc` (see `.envrc.sample`). Run `docker compose up -d` to start Chrome with the other services.
+**PDF generation:** Grover uses Puppeteer to connect to a headless Chrome instance. Chrome runs in Docker; the app uses `puppeteer-core` (no local Chromium). Set `GROVER_CHROME_WS_URL=ws://localhost:3000` in `.envrc` (see `.envrc.sample`). Run `just services-up` to start Chrome with the other services.
 
 This architecture was chosen for production: with multiple web/worker nodes, Chrome must run on its own dedicated node or service. All app nodes connect to the same Chrome instance via WebSocket, instead of each node running its own Chromium (which would be heavy and wasteful).
