@@ -1,1 +1,9 @@
 @import "tailwindcss";
+
+@theme {
+  --animate-fade-out-background: fade-out-background 2s ease-out forwards;
+  @keyframes fade-out-background {
+    from { background-color: var(--color-emerald-200); }
+    to { background-color: var(--color-white); }
+  }
+}

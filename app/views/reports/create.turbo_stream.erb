@@ -1,0 +1,6 @@
+<%= turbo_stream.update "flash" do %>
+  <%= render "layouts/flash" %>
+<% end %>
+<%= turbo_stream.replace "report_form", partial: "reports/report_form_section", locals: { report: Report.new } %>
+<%= turbo_stream.prepend "reports_tbody", partial: "reports/report_row", locals: { report: @report } %>
+<%= turbo_stream.remove "reports_empty_row" %>

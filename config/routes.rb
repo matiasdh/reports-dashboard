@@ -11,6 +11,5 @@ Rails.application.routes.draw do
 
   resources :reports, only: %i[index create]
 
-  # Defines the root path route ("/")
-  root "home#index"
+  root "reports#index"
 end
