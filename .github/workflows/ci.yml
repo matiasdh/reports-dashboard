@@ -94,7 +94,7 @@ jobs:
           bundler-cache: true
 
       - name: Sync rails_icons
-        run: bin/rails generate rails_icons:sync
+        run: bin/rails generate rails_icons:sync --libraries=heroicons --force
 
       - name: Run tests
         run: bin/rails db:test:prepare && bundle exec rspec
