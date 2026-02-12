@@ -1,0 +1,14 @@
+<% content_for :title, "#{@report.report_type.titleize} - #{@report.code}" %>
+
+<div class="meta">
+  <%= @report.report_type.titleize %> · <%= @report.code %> · <%= @report.user.name %> · <%= @report.created_at.strftime("%b %d, %Y") %>
+</div>
+
+<h1><%= @report.report_type.titleize %></h1>
+
+<% partial = "reports/pdf/#{@report.report_type}" %>
+<% if lookup_context.exists?(partial, [], true) %>
+  <%= render partial, data: @data %>
+<% else %>
+  <%= render "reports/pdf/unknown" %>
+<% end %>

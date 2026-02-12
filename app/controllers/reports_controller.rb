@@ -4,10 +4,21 @@ class ReportsController < ApplicationController
     @report = Report.new(user_id: params[:user_id], report_type: params[:report_type])
   end
 
+  def download
+    @report = Report.find(params[:id])
+    return head :not_found unless @report.downloadable?
+
+    send_data @report.pdf.download,
+      filename: @report.download_filename,
+      type: "application/pdf",
+      disposition: "attachment"
+  end
+
   def create
     @report = Report.new(report_params)
 
     if @report.save
+      ReportGeneratorJob.perform_later(@report)
       flash[:notice] = "Report queued successfully."
     else
       flash[:alert] = @report.errors.full_messages.to_sentence

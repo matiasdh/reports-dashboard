@@ -1,0 +1,22 @@
+<% d = local_assigns[:data] %>
+<p><strong>Month:</strong> <%= d["month"] %></p>
+<p><strong>Orders:</strong> <%= d["orders_count"] %> · <strong>Revenue:</strong> $<%= "%.2f" % (d["revenue_cents"] / 100.0) %></p>
+<h2>Orders</h2>
+<% d["orders"].each do |order| %>
+  <table>
+    <tr><th>Order ID</th><td><%= order["order_id"] %></td><th>Date</th><td><%= order["date"] %></td><th class="amount">Amount</th><td class="amount">$<%= "%.2f" % (order["amount_cents"] / 100.0) %></td></tr>
+  </table>
+  <table>
+    <thead><tr><th>Product</th><th>Qty</th><th class="amount">Unit Price</th><th class="amount">Total</th></tr></thead>
+    <tbody>
+      <% order["items"].each do |item| %>
+        <tr>
+          <td><%= item["product"] %></td>
+          <td><%= item["quantity"] %></td>
+          <td class="amount">$<%= "%.2f" % (item["unit_price_cents"] / 100.0) %></td>
+          <td class="amount">$<%= "%.2f" % (item["total_cents"] / 100.0) %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>
