@@ -14,12 +14,15 @@ FROM docker.io/library/ruby:$RUBY_VERSION-slim AS base
 # Rails app lives here
 WORKDIR /rails
 
-# Install base packages
+# Install base packages (Node.js for Grover/puppeteer-core; Chrome runs in separate container)
+ARG NODE_VERSION=22
 RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y curl libjemalloc2 libvips postgresql-client && \
+    curl -fsSL https://deb.nodesource.com/setup_${NODE_VERSION}.x | bash - && \
+    apt-get install -y nodejs && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
-# Set production environment
+# Set production environment (GROVER_CHROME_WS_URL must point to chrome service, e.g. ws://chrome:3000)
 ENV RAILS_ENV="production" \
     BUNDLE_DEPLOYMENT="1" \
     BUNDLE_PATH="/usr/local/bundle" \
@@ -41,6 +44,9 @@ RUN bundle install && \
 
 # Copy application code
 COPY . .
+
+# Install Puppeteer for Grover PDF generation
+RUN npm install
 
 # Precompile bootsnap code for faster boot times
 RUN bundle exec bootsnap precompile app/ lib/

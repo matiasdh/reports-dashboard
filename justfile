@@ -8,9 +8,10 @@ default:
 setup: services-up install db-setup
     @echo "Setup complete!"
 
-# Install Ruby dependencies
+# Install Ruby and Node dependencies (puppeteer-core for Grover PDF generation)
 install:
     bundle install
+    npm install
 
 # ─── Services (Docker Compose) ───────────────────────────────────────
 

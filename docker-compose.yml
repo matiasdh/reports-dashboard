@@ -28,6 +28,15 @@ services:
       timeout: 5s
       retries: 5
 
+  chrome:
+    image: browserless/chrome:latest
+    container_name: reports_dashboard_chrome
+    ports:
+      - "3000:3000"
+    environment:
+      CONNECTION_TIMEOUT: 60000
+      MAX_CONCURRENT_SESSIONS: 10
+
 volumes:
   postgres_data:
   redis_data:
