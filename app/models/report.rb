@@ -1,7 +1,7 @@
 class Report < ApplicationRecord
   belongs_to :user
 
-  enum :status, { pending: 0, processing: 1, completed: 2, failed: 3 }
+  enum :status, { pending: 0, processing: 1, completed: 2, failed: 3, fetching_data: 4 }
   enum :report_type, { daily_sales: 0, monthly_summary: 1, inventory_snapshot: 2 }
 
   validates :code, presence: true, uniqueness: { message: "a report of this type has already been generated today" }

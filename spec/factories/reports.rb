@@ -8,6 +8,10 @@ FactoryBot.define do
       status { :processing }
     end
 
+    trait :fetching_data do
+      status { :fetching_data }
+    end
+
     trait :completed do
       status { :completed }
       result_data { { total_sales: 1234.56, items_count: 42 }.to_json }
