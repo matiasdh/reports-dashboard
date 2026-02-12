@@ -1,0 +1,19 @@
+<% d = local_assigns[:data] %>
+<p><strong>Date:</strong> <%= d["date"] %></p>
+<h2>Sold Items</h2>
+<table>
+  <thead>
+    <tr><th>Product</th><th class="quantity">Qty</th><th class="amount">Unit Price</th><th class="amount">Total</th></tr>
+  </thead>
+  <tbody>
+    <% d["sold_items"].each do |item| %>
+      <tr>
+        <td><%= item["product"] %></td>
+        <td class="quantity"><%= format_quantity_html(item["quantity"]) %></td>
+        <td class="amount"><%= format_currency_html(item["unit_price_cents"]) %></td>
+        <td class="amount"><%= format_currency_html(item["total_cents"]) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<p><strong>Total Sales:</strong> <span class="inline-amount"><%= format_currency_html(d["total_sales_cents"]) %></span></p>

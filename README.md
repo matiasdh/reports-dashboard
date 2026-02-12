@@ -3,6 +3,7 @@
 ## Requirements
 
 - Ruby 3.4.1
+- Node.js 22+ (for Grover PDF generation)
 - PostgreSQL 17
 - Redis 7
 - [direnv](https://direnv.net/)
@@ -94,3 +95,8 @@ Report data is fetched via `ReportData::Reports.fetch(report_type)`. The current
 |------------|------------------------------|--------------------------|
 | PostgreSQL | Database                     | localhost:5432           |
 | Redis      | Cache, Action Cable, Sidekiq | redis://localhost:6379/0 |
+| Chrome     | PDF generation (Grover)      | ws://localhost:3000      |
+
+**PDF generation:** Grover uses Puppeteer to connect to a headless Chrome instance. Chrome runs in Docker; the app uses `puppeteer-core` (no local Chromium). Set `GROVER_CHROME_WS_URL=ws://localhost:3000` in `.envrc` (see `.envrc.sample`). Run `docker compose up -d` to start Chrome with the other services.
+
+This architecture was chosen for production: with multiple web/worker nodes, Chrome must run on its own dedicated node or service. All app nodes connect to the same Chrome instance via WebSocket, instead of each node running its own Chromium (which would be heavy and wasteful).

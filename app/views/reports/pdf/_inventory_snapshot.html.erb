@@ -1,0 +1,21 @@
+<% d = local_assigns[:data] %>
+<p><strong>Snapshot:</strong> <%= d["snapshot_at"] %></p>
+<p><strong>SKUs:</strong> <%= d["total_sku_count"] %> · <strong>Total Value:</strong> <span class="inline-amount"><%= format_currency_html(d["total_inventory_value_cents"]) %></span> · <strong>Low Stock:</strong> <%= d["low_stock_count"] %> · <strong>Out of Stock:</strong> <%= d["out_of_stock_count"] %></p>
+<h2>Inventory</h2>
+<table>
+  <thead>
+    <tr><th>SKU</th><th>Product</th><th class="quantity">Qty</th><th class="amount">Unit Price</th><th class="amount">Value</th><th class="status">Status</th></tr>
+  </thead>
+  <tbody>
+    <% d["skus"].each do |sku| %>
+      <tr>
+        <td><%= sku["sku"] %></td>
+        <td><%= sku["product"] %></td>
+        <td class="quantity"><%= format_quantity_html(sku["quantity"]) %></td>
+        <td class="amount"><%= format_currency_html(sku["unit_price_cents"]) %></td>
+        <td class="amount"><%= format_currency_html(sku["value_cents"]) %></td>
+        <td class="status"><%= sku["status"].titleize %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

@@ -82,3 +82,4 @@ group :test do
 end
 
 gem "tailwindcss-rails", "~> 4.4"
+gem "grover", "~> 1.2"

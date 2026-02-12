@@ -7,6 +7,9 @@ export DB_PASSWORD=postgres
 # Redis
 export REDIS_URL=redis://localhost:6379/0
 
+# Grover PDF generation (Chrome in Docker: docker-compose up chrome)
+export GROVER_CHROME_WS_URL=ws://localhost:3000
+
 # Rails
 export RAILS_ENV=development
 export RAILS_MAX_THREADS=5

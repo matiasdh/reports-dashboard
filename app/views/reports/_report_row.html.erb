@@ -1,11 +1,14 @@
 <tr id="<%= dom_id(report) %>" class="group hover:bg-slate-50/80 transition-colors <%= 'animate-fade-out-background' if report.previously_new_record? %>">
-  <td class="px-6 py-4 text-slate-600 text-sm"><%= report.report_type.titleize %></td>
+  <td class="px-6 py-4 text-slate-600 text-sm"><%= report_type_label(report) %></td>
   <td class="px-6 py-4">
     <%= tag.span report.status.humanize,
       class: status_badge_class(report.status) %>
   </td>
   <td class="px-6 py-4 text-slate-600 text-sm"><%= report.user.name %></td>
-  <td class="px-6 py-4 text-slate-500 text-sm">
-    <%= report.created_at.strftime("%b %d, %Y %H:%M") %>
+  <td class="px-6 py-4 text-slate-500 text-sm"><%= report_formatted_created_at(report) %></td>
+  <td class="px-6 py-4">
+    <% if report.downloadable? %>
+      <%= link_to "Download", download_report_path(report), class: "text-sky-600 hover:text-sky-700 text-sm font-medium" %>
+    <% end %>
   </td>
 </tr>

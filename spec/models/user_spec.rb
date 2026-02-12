@@ -18,15 +18,21 @@ RSpec.describe User, type: :model do
     it { is_expected.to validate_presence_of(:email) }
     it { is_expected.to validate_uniqueness_of(:email).case_insensitive }
 
-    it "rejects an invalid email format" do
-      user = build(:user, email: "not-an-email")
-      expect(user).not_to be_valid
-      expect(user.errors[:email]).to include("is invalid")
+    context "with invalid email format" do
+      let(:user) { build(:user, email: "not-an-email") }
+
+      it "rejects" do
+        expect(user).not_to be_valid
+        expect(user.errors[:email]).to include("is invalid")
+      end
     end
 
-    it "accepts a valid email format" do
-      user = build(:user, email: "user@example.com")
-      expect(user).to be_valid
+    context "with valid email format" do
+      let(:user) { build(:user, email: "user@example.com") }
+
+      it "accepts" do
+        expect(user).to be_valid
+      end
     end
   end
 end

@@ -1,0 +1,7 @@
+{
+  "name": "reports-dashboard",
+  "private": true,
+  "dependencies": {
+    "puppeteer-core": "^23.0.0"
+  }
+}
