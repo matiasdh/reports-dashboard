@@ -1,4 +1,6 @@
 module ApplicationHelper
+  include RailsIcons::ViewHelper if defined?(RailsIcons::ViewHelper)
+
   def flash_class(type)
     base = "mb-6 px-4 py-3 border rounded-lg text-sm"
     case type&.to_sym
