@@ -1,0 +1,11 @@
+<% status = report.status %>
+<% classes = status_badge_class(status) %>
+
+<% if report.processing? %>
+  <span class="<%= classes %>">
+    <%= icon "faded-spinner", library: "animated", stroke_width: 4, class: "size-3 text-sky-600 mr-1" %>
+    <%= status.humanize %>
+  </span>
+<% else %>
+  <span class="<%= classes %>"><%= status.humanize %></span>
+<% end %>

@@ -8,10 +8,11 @@ class ReportsController < ApplicationController
     @report = Report.find(params[:id])
     return head :not_found unless @report.downloadable?
 
-    send_data @report.pdf.download,
-      filename: @report.download_filename,
-      type: "application/pdf",
-      disposition: "attachment"
+    redirect_to rails_blob_url(
+      @report.pdf,
+      disposition: "attachment",
+      filename: @report.download_filename
+    ), allow_other_host: true
   end
 
   def create

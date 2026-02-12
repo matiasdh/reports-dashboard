@@ -23,5 +23,8 @@ module ReportsDashboard
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
+
+    # Active Storage signed URLs expire after 5 minutes, so shared links become invalid quickly.
+    config.active_storage.urls_expire_in = 5.minutes
   end
 end

@@ -89,15 +89,15 @@ RSpec.describe "Reports", type: :request do
       expect(response).to have_http_status(:not_found)
     end
 
-    it "sends the PDF when attached" do
+    it "redirects to the PDF blob URL when attached" do
       report = create(:report, :completed, user: user)
 
       get download_report_path(report)
 
-      expect(response).to have_http_status(:ok)
-      expect(response.media_type).to eq("application/pdf")
-      expect(response.headers["Content-Disposition"]).to include("attachment")
-      expect(response.headers["Content-Disposition"]).to include("#{report.code}.pdf")
+      expect(response).to have_http_status(:redirect)
+      expect(response.headers["Location"]).to include("rails/active_storage")
+      expect(response.headers["Location"]).to include("attachment")
+      expect(response.headers["Location"]).to include("#{report.code}.pdf")
     end
   end
 end

@@ -45,4 +45,39 @@ RSpec.describe GenerateReportService do
       expect(report.reload.status).to eq("failed")
     end
   end
+
+  describe "Turbo Stream broadcasts" do
+    it "broadcasts report update when processing starts" do
+      expect(Turbo::StreamsChannel).to receive(:broadcast_replace_to).with(
+        "reports",
+        hash_including(target: report)
+      ).at_least(:once)
+
+      described_class.new(report: report).call
+    end
+
+    it "broadcasts report update when completed" do
+      expect(Turbo::StreamsChannel).to receive(:broadcast_replace_to).with(
+        "reports",
+        hash_including(target: report)
+      ).at_least(:once)
+
+      described_class.new(report: report).call
+    end
+
+    context "when fetch fails" do
+      before do
+        allow(ReportData::Reports).to receive(:fetch).and_raise(StandardError.new("Fetch failed"))
+      end
+
+      it "broadcasts report update when failed" do
+        expect(Turbo::StreamsChannel).to receive(:broadcast_replace_to).with(
+          "reports",
+          hash_including(target: report)
+        ).at_least(:once)
+
+        described_class.new(report: report).call
+      end
+    end
+  end
 end
