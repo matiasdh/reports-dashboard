@@ -83,3 +83,4 @@ end
 
 gem "tailwindcss-rails", "~> 4.4"
 gem "grover", "~> 1.2"
+gem "rails_icons", "~> 1.6"
