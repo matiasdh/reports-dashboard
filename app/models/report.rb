@@ -1,5 +1,6 @@
 class Report < ApplicationRecord
   belongs_to :user
+  has_one_attached :pdf
 
   enum :status, { pending: 0, processing: 1, completed: 2, failed: 3 }
   enum :report_type, { daily_sales: 0, monthly_summary: 1, inventory_snapshot: 2 }
@@ -9,6 +10,14 @@ class Report < ApplicationRecord
   validates :report_type, presence: true
 
   before_validation :generate_code, on: :create, if: :new_record?
+
+  def downloadable?
+    completed? && pdf.attached?
+  end
+
+  def download_filename
+    "#{code}.pdf"
+  end
 
   private
 
