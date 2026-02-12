@@ -1,4 +1,12 @@
-require "ostruct"
+ReportServiceResult = Data.define(:success?, :report, :error) do
+  def self.success(report)
+    new(success?: true, report: report, error: nil)
+  end
+
+  def self.failure(report, error)
+    new(success?: false, report: report, error: error)
+  end
+end
 
 class GenerateReportService
   def initialize(report:)
@@ -50,11 +58,11 @@ class GenerateReportService
   end
 
   def success
-    OpenStruct.new(success?: true, report: report)
+    ReportServiceResult.success(report)
   end
 
   def failure(error)
-    OpenStruct.new(success?: false, report: report, error: error)
+    ReportServiceResult.failure(report, error)
   end
 
   def broadcast_report_update!
