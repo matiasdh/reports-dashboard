@@ -17,7 +17,6 @@ RSpec.describe "Reports", type: :request do
       expect(response.body).to include("Daily Sales")
       expect(response.body).to include("Monthly Summary")
       expect(response.body).to include(ERB::Util.html_escape(user.name))
-      # Newest first: within table body, Monthly Summary appears before Daily Sales
       tbody = response.body[/<tbody[^>]*>(.*?)<\/tbody>/m, 1]
       expect(tbody.index("Monthly Summary")).to be < tbody.index("Daily Sales")
     end
@@ -43,7 +42,7 @@ RSpec.describe "Reports", type: :request do
 
       expect(response.media_type).to eq("text/vnd.turbo-stream.html")
       expect(response.body).to include("turbo-stream")
-      expect(response.body).to include(user.name)
+      expect(response.body).to include(ERB::Util.html_escape(user.name))
     end
 
     it "redirects with an alert for duplicate user + type + day" do
@@ -70,6 +69,35 @@ RSpec.describe "Reports", type: :request do
       expect(response).to redirect_to(reports_path(user_id: 0, report_type: "daily_sales"))
       follow_redirect!
       expect(response.body).to include("User must exist")
+    end
+
+    it "enqueues ReportGeneratorJob on create" do
+      expect {
+        post reports_path, params: { report: { user_id: user.id, report_type: "daily_sales" } }
+      }.to have_enqueued_job(ReportGeneratorJob)
+    end
+  end
+
+  describe "GET /reports/:id/download" do
+    let(:user) { create(:user) }
+
+    it "returns 404 when report has no PDF attached" do
+      report = create(:report, user: user, status: :completed)
+
+      get download_report_path(report)
+
+      expect(response).to have_http_status(:not_found)
+    end
+
+    it "sends the PDF when attached" do
+      report = create(:report, :completed, user: user)
+
+      get download_report_path(report)
+
+      expect(response).to have_http_status(:ok)
+      expect(response.media_type).to eq("application/pdf")
+      expect(response.headers["Content-Disposition"]).to include("attachment")
+      expect(response.headers["Content-Disposition"]).to include("#{report.code}.pdf")
     end
   end
 end

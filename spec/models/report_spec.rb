@@ -66,30 +66,59 @@ RSpec.describe Report, type: :model do
     end
   end
 
+  describe "#downloadable?" do
+    let(:report) { create(:report, :completed) }
+
+    it "returns true when completed and PDF is attached" do
+      expect(report.downloadable?).to be true
+    end
+
+    context "when completed but PDF is not attached" do
+      let(:report) { create(:report, status: :completed) }
+
+      it "returns false" do
+        expect(report.downloadable?).to be false
+      end
+    end
+
+    it "returns false when PDF is attached but status is not completed" do
+      report.update!(status: :processing)
+      expect(report.downloadable?).to be false
+    end
+  end
+
+  describe "#download_filename" do
+    let(:report) { create(:report, code: "DAILY_SALES-20260212-1") }
+
+    it "returns code with .pdf extension" do
+      expect(report.download_filename).to eq("DAILY_SALES-20260212-1.pdf")
+    end
+  end
+
   describe "uniqueness per user, type, and day" do
     it "prevents duplicate reports of the same type for the same user on the same day" do
       user = create(:user)
       create(:report, user: user, report_type: :daily_sales)
-
       duplicate = build(:report, user: user, report_type: :daily_sales)
+
       expect(duplicate).not_to be_valid
       expect(duplicate.errors[:code]).to include("a report of this type has already been generated today")
     end
 
     it "allows the same report type for different users" do
       create(:report, report_type: :daily_sales)
-
       other_user = create(:user)
-      report_b = build(:report, user: other_user, report_type: :daily_sales)
-      expect(report_b).to be_valid
+      report = build(:report, user: other_user, report_type: :daily_sales)
+
+      expect(report).to be_valid
     end
 
     it "allows different report types for the same user on the same day" do
       user = create(:user)
       create(:report, user: user, report_type: :daily_sales)
+      report = build(:report, user: user, report_type: :monthly_summary)
 
-      different_type = build(:report, user: user, report_type: :monthly_summary)
-      expect(different_type).to be_valid
+      expect(report).to be_valid
     end
   end
 end
