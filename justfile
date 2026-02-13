@@ -14,9 +14,9 @@ install:
     npm install
     just icons-sync
 
-# Sync rails_icons SVG assets (heroicons, animated)
+# Sync rails_icons SVG assets (heroicons)
 icons-sync:
-    bin/rails generate rails_icons:sync
+    bin/rails generate rails_icons:sync --libraries=heroicons --force
 
 # ─── Services (Docker Compose) ───────────────────────────────────────
 
