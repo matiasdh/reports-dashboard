@@ -2,16 +2,16 @@
   <div class="flex sm:flex-row flex-col sm:items-end gap-4 sm:gap-3">
     <div class="w-full sm:w-64">
       <%= f.label :user_id, "User", class: "block text-xs font-medium text-slate-600 mb-1.5" %>
-      <%= f.collection_select :user_id, User.order(:name), :id, :name,
+      <%= f.collection_select :user_id, users, :id, :name,
         { prompt: "Select user" },
-        class: "block w-full rounded-lg border-slate-300 bg-white px-3 py-3 text-sm text-slate-900 shadow-sm ring-1 ring-slate-900/5 focus:border-slate-400 focus:ring-2 focus:ring-slate-400/20" %>
+        class: form_select_input_classes %>
     </div>
     <div class="w-full sm:w-64">
       <%= f.label :report_type, "Report type", class: "block text-xs font-medium text-slate-600 mb-1.5" %>
       <%= f.select :report_type,
         Report.report_types.keys.map { |t| [t.titleize, t] },
         { prompt: "Select type" },
-        class: "block w-full rounded-lg border-slate-300 bg-white px-3 py-3 text-sm text-slate-900 shadow-sm ring-1 ring-slate-900/5 focus:border-slate-400 focus:ring-2 focus:ring-slate-400/20" %>
+        class: form_select_input_classes %>
     </div>
   </div>
   <%= f.button type: "submit",

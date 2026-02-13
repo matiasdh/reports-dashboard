@@ -35,4 +35,8 @@ module ReportsHelper
   def status_badge_html(report)
     render "reports/status_badge", report: report
   end
+
+  def form_select_input_classes
+    "block w-full rounded-lg border-slate-300 bg-white px-3 py-3 text-sm text-slate-900 shadow-sm ring-1 ring-slate-900/5 focus:border-slate-400 focus:ring-2 focus:ring-slate-400/20"
+  end
 end

@@ -8,7 +8,7 @@
     </div>
   </header>
 
-  <%= render "reports/report_form_section", report: @report %>
+  <%= render "reports/report_form_section", report: @report, users: @users %>
 
   <%= render "reports/reports_list_frame", reports: @reports, pagy: @pagy %>
 </div>

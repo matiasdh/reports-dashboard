@@ -2,6 +2,7 @@ class ReportsController < ApplicationController
   def index
     @pagy, @reports = pagy(:countish, Report.with_associations.order(created_at: :desc))
     @report = Report.new(user_id: params[:user_id], report_type: params[:report_type])
+    @users = User.order(:name)
 
     render partial: "reports/reports_list_frame", locals: { reports: @reports, pagy: @pagy }, layout: false if turbo_frame_request?
   end
@@ -19,6 +20,7 @@ class ReportsController < ApplicationController
 
   def create
     @report = Report.new(report_params)
+    @users = User.order(:name)
 
     if @report.save
       ReportGeneratorJob.perform_later(@report)

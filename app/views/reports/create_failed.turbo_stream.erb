@@ -1,4 +1,4 @@
 <%= turbo_stream.update "flash" do %>
   <%= render "layouts/flash" %>
 <% end %>
-<%= turbo_stream.replace "report_form", partial: "reports/report_form_section", locals: { report: @report } %>
+<%= turbo_stream.replace "report_form", partial: "reports/report_form_section", locals: { report: @report, users: @users } %>
