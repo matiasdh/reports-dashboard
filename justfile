@@ -72,6 +72,13 @@ db-console:
 server:
     bin/rails server
 
+# Start Rails server + Sidekiq together (Ctrl+C stops both)
+dev:
+    #!/usr/bin/env bash
+    trap 'kill 0' EXIT
+    bundle exec sidekiq &
+    bin/rails server
+
 # Start Rails console
 console:
     bin/rails console

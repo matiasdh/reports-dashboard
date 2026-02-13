@@ -1,7 +1,7 @@
 Faker::Config.random = Random.new(42)
 now = Time.current
 
-users = 5.times.map do |i|
+users = 15.times.map do |i|
   {
     name: Faker::Name.name,
     email: Faker::Internet.email(name: "user_#{i}"),

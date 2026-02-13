@@ -34,7 +34,7 @@ Report.upsert_all(records, unique_by: :index_reports_on_code)
 
 # Generate PDFs for completed reports (requires Chrome via GROVER_CHROME_WS_URL, e.g. ws://localhost:3001)
 completed_count = 0
-Report.where(status: :completed).find_each do |report|
+Report.where.not(status: :failed).find_each do |report|
   next if report.pdf.attached?
 
   result = GenerateReportService.new(report: report).call
