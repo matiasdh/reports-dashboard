@@ -51,8 +51,8 @@ Execute in order:
 
 1. `cp .envrc.sample .envrc` — Copy env template. `RAILS_MASTER_KEY` is not required for development.
 2. `direnv allow` — Approve the `.envrc` file.
-3. `just setup` — Start services, install deps, seed database. The seed may take a moment — it creates report records.
-4. `just dev` — Start Rails + Sidekiq. Create reports from the form; PDF generation runs in the background and may take a moment.
+3. `just setup` — Start services, install deps, seed database. The seed may take a moment, since it creates report records.
+4. `just dev` — Start Rails + Sidekiq. Create reports from the form, PDF generation runs in the background.
 
 ```bash
 cp .envrc.sample .envrc
@@ -131,6 +131,8 @@ Report data is fetched via `ReportData::Reports.fetch(report_type)`. The current
 | PostgreSQL | Database                     | localhost:5432           |
 | Redis      | Cache, Action Cable, Sidekiq | redis://localhost:6379/0 |
 | Chrome     | PDF generation (Grover)      | ws://localhost:3001      |
+
+AnyCable can be used in the future for production WebSocket scaling.
 
 **PDF generation:** Grover uses Puppeteer to connect to a headless Chrome instance. Chrome runs in Docker and the app uses `puppeteer-core` (no local Chromium). Set `GROVER_CHROME_WS_URL=ws://localhost:3001` in `.envrc` (see `.envrc.sample`). Run `just services-up` to start Chrome with the other services.
 
