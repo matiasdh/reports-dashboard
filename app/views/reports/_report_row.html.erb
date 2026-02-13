@@ -1,4 +1,4 @@
-<tr id="<%= dom_id(report) %>" class="group hover:bg-slate-50/80 transition-colors <%= 'animate-fade-out-background' if report.previously_new_record? %>">
+<tr id="<%= dom_id(report) %>" class="group hover:bg-slate-50/80 transition-colors <%= 'animate-fade-out-background' if report.previously_new_record? || report.processing? %>">
   <td class="px-6 py-4 text-slate-600 text-sm"><%= report_type_label(report) %></td>
   <td class="px-6 py-4">
     <%= status_badge_html(report) %>
