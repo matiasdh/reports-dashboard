@@ -30,7 +30,10 @@ class ReportsController < ApplicationController
     end
 
     respond_to do |format|
-      format.turbo_stream { render :create_failed, status: :unprocessable_entity unless @report.persisted? }
+      format.turbo_stream do
+        flash.discard
+        render :create_failed, status: :unprocessable_entity unless @report.persisted?
+      end
       format.html { redirect_to reports_path(user_id: @report.user_id, report_type: @report.report_type) }
     end
   end
