@@ -1,6 +1,6 @@
 # Reports Dashboard
 
-<!-- TODO: Add GIF/screenshot showing the full flow: form submit → toast → row appears → processing spinner → completed → download -->
+![Flow demo: form submit → toast → row appears → processing spinner → completed → download](docs/flow-demo.gif)
 
 ## Technical Highlights
 
