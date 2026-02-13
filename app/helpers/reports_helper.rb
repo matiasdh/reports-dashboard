@@ -39,4 +39,10 @@ module ReportsHelper
   def form_select_input_classes
     "block w-full rounded-lg border-slate-300 bg-white px-3 py-3 text-sm text-slate-900 shadow-sm ring-1 ring-slate-900/5 focus:border-slate-400 focus:ring-2 focus:ring-slate-400/20"
   end
+
+  def table_header_classes(align: "left")
+    base = "px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-wider"
+    align_class = align == "right" ? "text-right" : "text-left"
+    "#{base} #{align_class}"
+  end
 end
