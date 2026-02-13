@@ -1,14 +1,26 @@
-<div id="reports_table">
-  <div class="overflow-x-auto">
-    <table class="min-w-full">
-      <%= render "reports/reports_table_header" %>
-      <tbody class="divide-y divide-slate-100 [&_td]:h-[4.5rem] [&_td]:align-middle" id="reports_tbody">
-        <% if pagy.count.positive? %>
-          <%= render partial: "reports/report_row", collection: reports, as: :report %>
-        <% else %>
-          <%= render "reports/reports_empty_row" %>
-        <% end %>
-      </tbody>
-    </table>
+<div id="reports_table" class="overflow-x-auto" role="grid" aria-label="Recent reports">
+  <div class="min-w-0">
+    <%# Header: visible on desktop, aligns with report grid %>
+    <div class="hidden md:grid md:grid-cols-5 md:gap-4 bg-slate-50/50 border-slate-100 border-b" role="row">
+      <div class="<%= table_header_classes %>">Report type</div>
+      <div class="<%= table_header_classes %>">Status</div>
+      <div class="<%= table_header_classes %>">User</div>
+      <div class="<%= table_header_classes %>">Created</div>
+      <div class="<%= table_header_classes(align: "right") %>">Action</div>
+    </div>
+
+    <div id="reports_items" class="divide-y divide-slate-100">
+      <% if pagy.count.positive? %>
+        <%= render partial: "reports/report_item", collection: reports, as: :report %>
+      <% else %>
+        <div id="reports_empty" class="px-4 py-16 sm:px-6 text-center">
+          <div class="flex justify-center items-center bg-slate-100 mx-auto rounded-full w-12 h-12 text-slate-400">
+            <%= icon "document-text", library: "heroicons", variant: "outline", stroke_width: 1.5, class: "w-6 h-6" %>
+          </div>
+          <h3 class="mt-4 font-medium text-slate-900 text-sm">No reports yet</h3>
+          <p class="mt-1 text-slate-500 text-sm">Generate your first report using the form above.</p>
+        </div>
+      <% end %>
+    </div>
   </div>
 </div>

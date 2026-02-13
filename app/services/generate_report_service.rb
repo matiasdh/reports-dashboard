@@ -72,7 +72,7 @@ class GenerateReportService
     Turbo::StreamsChannel.broadcast_replace_to(
       "reports",
       target: report,
-      partial: "reports/report_row",
+      partial: "reports/report_item",
       locals: { report: report }
     )
   end

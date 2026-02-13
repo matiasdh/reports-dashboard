@@ -41,7 +41,7 @@ module ReportsHelper
   end
 
   def table_header_classes(align: "left")
-    base = "px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-wider"
+    base = "px-4 py-2 sm:px-6 sm:py-2.5 text-xs font-semibold text-slate-500 uppercase tracking-wider"
     align_class = align == "right" ? "text-right" : "text-left"
     "#{base} #{align_class}"
   end

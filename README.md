@@ -8,7 +8,8 @@
 - **Async PDF generation** with Sidekiq + headless Chrome in Docker (Grover/Puppeteer)
 - **Strategy pattern** for pluggable report data sources, swappable without changing callers
 - **Pagination with cached counts** (Pagy `:countish`) to avoid `COUNT(*)` on every request
-- **Turbo-native UX**: form submission, toast notifications, and table updates without full page reloads
+- **Turbo-native UX**: form submission, toast notifications, and list updates without full page reloads
+- **Responsive reports list**: divs + CSS Grid (not `<table>`) for a single layout that adapts from table-like on desktop to card-like on mobile, with one DOM element per report and one broadcast per update
 - **One-command setup**: `just setup` boots infrastructure, installs dependencies, and seeds the database
 
 ### Architecture
@@ -116,7 +117,7 @@ Report data is fetched via `ReportData::Reports.fetch(report_type)`. The current
 
 - **`result_data` parsing responsibility:** `ReportPdfRenderer` reads `report.result_data` directly (jsonb returns a Hash). In a larger codebase, typed access via `store_accessor` or `Report#parsed_data` could centralize parsing, but the single read in the renderer remains simple.
 
-- **Table view column definition:** The reports table currently defines columns directly in the `_report_row` and `_reports_table_header` partials. A more generic approach would be to define columns as a data structure (e.g. an array of hashes with `label`, `value` lambda, and CSS classes), then render headers and cells dynamically from that definition. This would make adding or reordering columns a config change instead of a template edit. The current partial-based structure already supports extensibility naturally through Rails' rendering conventions, so for a single-resource dashboard this level of abstraction is not needed yet.
+- **Divs + CSS Grid instead of HTML table:** The reports list uses `<div>` elements with CSS Grid rather than a semantic `<table>`. This allows a single DOM structure that adapts responsively: on desktop (≥768px) a 5-column grid mimics a table layout; on mobile the same markup stacks vertically with labels visible. A real `<table>` would require separate layouts (table vs cards) or horizontal scroll, and the worker would need to broadcast updates to multiple targets. With one container per report, `GenerateReportService` simply broadcasts one replace—it has no knowledge of viewports or layouts. The presentation (table-like vs card-like) is purely a CSS concern on the client. **Tradeoff:** We use `role="grid"` and `role="gridcell"` but screen readers won't announce column headers. A semantic `<table>` would, or we could add ARIA manually. Acceptable for this MVP.
 
 ## Icons
 
