@@ -32,17 +32,6 @@ end
 
 Report.upsert_all(records, unique_by: :index_reports_on_code)
 
-# Generate PDFs for completed reports (requires Chrome via GROVER_CHROME_WS_URL, e.g. ws://localhost:3001)
-completed_count = 0
-Report.where.not(status: :failed).find_each do |report|
-  next if report.pdf.attached?
-
-  result = GenerateReportService.new(report: report).call
-  if result.success?
-    completed_count += 1
-  else
-    report.completed! # Restore status if PDF generation failed (e.g. Chrome not running)
-  end
-end
-
-puts "Seeded #{Report.count} reports (#{completed_count} PDFs generated)"
+# PDFs are generated in the background by Sidekiq when you run `just dev`.
+# Reports may take a moment to show as completed — workers process jobs asynchronously.
+puts "Seeded #{Report.count} reports"

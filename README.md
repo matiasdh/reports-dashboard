@@ -47,15 +47,16 @@ Browser (Turbo/Stimulus)
 
 ## Setup
 
-1. Configure environment variables:
+Execute in order:
+
+1. `cp .envrc.sample .envrc` — Copy env template. `RAILS_MASTER_KEY` is not required for development.
+2. `direnv allow` — Approve the `.envrc` file.
+3. `just setup` — Start services, install deps, seed database. The seed may take a moment — it creates report records.
+4. `just dev` — Start Rails + Sidekiq. Create reports from the form; PDF generation runs in the background and may take a moment.
+
 ```bash
 cp .envrc.sample .envrc
-   # Add your RAILS_MASTER_KEY (provided separately)
 direnv allow
-```
-
-2. Run the full setup (services + deps + database) and start the app:
-```bash
 just setup
 just dev
 ```
@@ -117,7 +118,7 @@ Report data is fetched via `ReportData::Reports.fetch(report_type)`. The current
 
 - **`result_data` parsing responsibility:** `ReportPdfRenderer` reads `report.result_data` directly (jsonb returns a Hash). In a larger codebase, typed access via `store_accessor` or `Report#parsed_data` could centralize parsing, but the single read in the renderer remains simple.
 
-- **Divs + CSS Grid instead of HTML table:** The reports list uses `<div>` elements with CSS Grid rather than a semantic `<table>`. This allows a single DOM structure that adapts responsively: on desktop (≥768px) a 5-column grid mimics a table layout; on mobile the same markup stacks vertically with labels visible. A real `<table>` would require separate layouts (table vs cards) or horizontal scroll, and the worker would need to broadcast updates to multiple targets. With one container per report, `GenerateReportService` simply broadcasts one replace—it has no knowledge of viewports or layouts. The presentation (table-like vs card-like) is purely a CSS concern on the client. **Tradeoff:** We use `role="grid"` and `role="gridcell"` but screen readers won't announce column headers. A semantic `<table>` would, or we could add ARIA manually. Acceptable for this MVP.
+- **Divs + CSS Grid instead of HTML table:** The reports list uses `<div>` elements with CSS Grid rather than a semantic `<table>`. This allows a single DOM structure that adapts responsively for both desktop and mobile. A real `<table>` would require separate layouts (table vs cards) or horizontal scroll. **Tradeoff:** We use `role="grid"` and `role="gridcell"` but screen readers won't announce column headers. A semantic `<table>` would, or we could add ARIA manually. Acceptable for this MVP.
 
 ## Icons
 
