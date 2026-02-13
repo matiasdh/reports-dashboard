@@ -27,12 +27,16 @@ module ReportsHelper
     case status&.to_s
     when "completed" then "#{base} bg-emerald-100 text-emerald-700"
     when "failed" then "#{base} bg-rose-100 text-rose-700"
-    when "processing", "fetching_data" then "#{base} bg-sky-100 text-sky-700"
+    when "processing" then "#{base} bg-sky-100 text-sky-700"
     else "#{base} bg-slate-100 text-slate-600"
     end
   end
 
   def status_badge_html(report)
     render "reports/status_badge", report: report
+  end
+
+  def form_select_input_classes
+    "block w-full rounded-lg border-slate-300 bg-white px-3 py-3 text-sm text-slate-900 shadow-sm ring-1 ring-slate-900/5 focus:border-slate-400 focus:ring-2 focus:ring-slate-400/20"
   end
 end

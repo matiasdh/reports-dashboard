@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :report do
     user
-    report_type { Report.report_types.keys.sample }
+    sequence(:report_type) { |n| Report.report_types.keys[n % Report.report_types.keys.size] }
     status { :pending }
 
     trait :processing do
