@@ -7,7 +7,7 @@ module ReportsHelper
   end
 
   def format_currency_html(cents)
-    format_numeric_html((cents / 100.0).round(2), symbol: "$", precision: 2)
+    format_numeric_html((cents.to_i / 100.0).round(2), symbol: "$", precision: 2)
   end
 
   def format_quantity_html(quantity)
