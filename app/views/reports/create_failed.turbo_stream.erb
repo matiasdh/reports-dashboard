@@ -1,4 +1,8 @@
-<%= turbo_stream.update "flash" do %>
-  <%= render "layouts/flash" %>
+<% flash.each do |type, message| %>
+  <% if message.present? %>
+    <%= turbo_stream.append "toast_container" do %>
+      <%= render "layouts/toast", type: type, message: message %>
+    <% end %>
+  <% end %>
 <% end %>
 <%= turbo_stream.replace "report_form", partial: "reports/report_form_section", locals: { report: @report, users: @users } %>
