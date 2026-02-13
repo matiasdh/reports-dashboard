@@ -1,9 +1,5 @@
-<div id="flash">
-  <% flash.each do |type, message| %>
-    <% if message.present? %>
-      <div class="<%= flash_class(type) %>" role="alert">
-        <%= message %>
-      </div>
-    <% end %>
+<% flash.each do |type, message| %>
+  <% if message.present? %>
+    <%= render "layouts/toast", type: type, message: message %>
   <% end %>
-</div>
+<% end %>
