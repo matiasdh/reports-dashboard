@@ -42,8 +42,21 @@ Browser (Turbo/Stimulus)
 - Node.js 22+ (for Grover PDF generation)
 - PostgreSQL 17
 - Redis 7
-- [direnv](https://direnv.net/)
-- [just](https://github.com/casey/just)
+- [direnv](https://direnv.net/) — `brew install direnv`
+- [just](https://github.com/casey/just) — `brew install just`
+
+Add the direnv hook to your shell config:
+
+```bash
+# zsh (~/.zshrc)
+eval "$(direnv hook zsh)"
+
+# bash (~/.bashrc)
+eval "$(direnv hook bash)"
+
+# fish (~/.config/fish/config.fish)
+direnv hook fish | source
+```
 
 ## Setup
 
