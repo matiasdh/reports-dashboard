@@ -6,7 +6,8 @@ RSpec.describe GenerateReportService do
 
   before do
     allow(ReportData::Reports).to receive(:fetch).with(report.report_type).and_return(mock_data)
-    allow_any_instance_of(Grover).to receive(:to_pdf).and_return("%PDF-1.4 mock")
+    grover_instance = instance_double(Grover, to_pdf: "%PDF-1.4 mock")
+    allow(Grover).to receive(:new).and_return(grover_instance)
   end
 
   it "fetches data and saves to result_data" do
