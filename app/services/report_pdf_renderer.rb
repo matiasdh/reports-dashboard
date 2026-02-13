@@ -9,7 +9,7 @@ class ReportPdfRenderer
       layout: "pdf",
       assigns: {
         report: report,
-        data: JSON.parse(report.result_data)
+        data: report.result_data || raise(ArgumentError, "result_data cannot be nil")
       }
     )
   end

@@ -6,7 +6,7 @@ RSpec.describe ReportPdfRenderer do
   describe "#call" do
     it "renders the PDF template with parsed result_data" do
       report = create(:report, :completed, user: user, report_type: :daily_sales)
-      report.update!(result_data: { date: "2026-02-12", sold_items: [], total_sales_cents: 0 }.to_json)
+      report.update!(result_data: { date: "2026-02-12", sold_items: [], total_sales_cents: 0 })
 
       html = described_class.new(report).call
 
@@ -18,13 +18,7 @@ RSpec.describe ReportPdfRenderer do
     it "raises when result_data is nil" do
       report = create(:report, user: user, report_type: :daily_sales, result_data: nil)
 
-      expect { described_class.new(report).call }.to raise_error(TypeError, /nil into String/)
-    end
-
-    it "raises JSON::ParserError when result_data is malformed" do
-      report = create(:report, user: user, report_type: :daily_sales, result_data: "not valid json{")
-
-      expect { described_class.new(report).call }.to raise_error(JSON::ParserError)
+      expect { described_class.new(report).call }.to raise_error(ArgumentError, "result_data cannot be nil")
     end
   end
 end
