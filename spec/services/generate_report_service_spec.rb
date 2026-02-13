@@ -15,7 +15,7 @@ RSpec.describe GenerateReportService do
 
     expect(result.success?).to be true
     expect(report.reload.result_data).to be_present
-    expect(JSON.parse(report.result_data)).to eq(mock_data)
+    expect(report.result_data).to eq(mock_data)
   end
 
   it "generates PDF and attaches to report" do

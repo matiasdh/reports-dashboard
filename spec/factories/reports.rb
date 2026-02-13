@@ -10,7 +10,7 @@ FactoryBot.define do
 
     trait :completed do
       status { :completed }
-      result_data { { total_sales: 1234.56, items_count: 42 }.to_json }
+      result_data { { total_sales: 1234.56, items_count: 42 } }
       after(:create) do |report|
         report.pdf.attach(
           io: StringIO.new("%PDF-1.4 mock"),

@@ -33,7 +33,7 @@ class GenerateReportService
 
   def fetch_data!
     data = ReportData::Reports.fetch(report.report_type)
-    report.update!(result_data: data.to_json)
+    report.update!(result_data: data)
   end
 
   def generate_pdf!
