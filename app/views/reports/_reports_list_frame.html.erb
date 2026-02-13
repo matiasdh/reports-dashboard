@@ -1,19 +1,21 @@
 <%= turbo_frame_tag "reports_list", data: { turbo_action: "advance" } do %>
   <section class="bg-white shadow-sm border border-slate-200/60 rounded-2xl ring-1 ring-slate-900/5 overflow-hidden">
-    <div class="px-6 py-4 border-slate-100 border-b">
+    <div class="px-4 py-2.5 sm:px-6 sm:py-3 border-slate-100 border-b">
       <h2 class="font-medium text-slate-500 text-sm uppercase tracking-wider">Recent reports</h2>
     </div>
 
     <%= render "reports/reports_table", reports: reports, pagy: pagy %>
 
-    <div class="flex justify-between items-center gap-4 px-6 py-4 border-slate-100 border-t">
+    <div class="flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-3 px-4 py-3 sm:px-6 sm:py-4 border-slate-100 border-t">
       <% if pagy.count.positive? %>
         <p class="text-slate-500 text-sm">
           Showing <%= pagy.in %> reports from <%= pagy.count %>
         </p>
       <% end %>
       <% if pagy.pages > 1 %>
-        <%== pagy.series_nav(id: "pagy-reports", aria_label: "Reports pages", slots: 7, anchor_string: 'data-turbo-frame="reports_list"') %>
+        <div class="flex justify-center sm:justify-end">
+          <%== pagy.series_nav(id: "pagy-reports", aria_label: "Reports pages", slots: 7, anchor_string: 'data-turbo-frame="reports_list"') %>
+        </div>
       <% end %>
     </div>
   </section>

@@ -1,0 +1,10 @@
+<% if report.downloadable? %>
+  <%= link_to download_report_path(report),
+      class: "inline-flex items-center gap-1.5 px-3 py-1.5 bg-white border border-slate-200 text-slate-700 text-sm font-medium rounded-lg hover:bg-slate-50 hover:text-slate-900 focus:outline-none focus:ring-2 focus:ring-slate-200 transition-colors shadow-sm no-underline",
+      data: { turbo_frame: "_top" } do %>
+    <%= icon "arrow-down-tray", library: "heroicons", stroke_width: 2, class: "h-4 w-4 shrink-0" %>
+    Download
+  <% end %>
+<% else %>
+  <span class="text-slate-400 text-sm italic">Not available</span>
+<% end %>

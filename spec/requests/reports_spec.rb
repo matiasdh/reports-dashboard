@@ -17,8 +17,8 @@ RSpec.describe "Reports", type: :request do
       expect(response.body).to include("Daily Sales")
       expect(response.body).to include("Monthly Summary")
       expect(response.body).to include(ERB::Util.html_escape(user.name))
-      tbody = response.body[/<tbody[^>]*>(.*?)<\/tbody>/m, 1]
-      expect(tbody.index("Monthly Summary")).to be < tbody.index("Daily Sales")
+      reports_section = response.body.split('id="reports_list"', 2).last
+      expect(reports_section.index("Monthly Summary")).to be < reports_section.index("Daily Sales")
     end
   end
 
