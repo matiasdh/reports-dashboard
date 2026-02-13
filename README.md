@@ -51,8 +51,8 @@ Execute in order:
 
 1. `cp .envrc.sample .envrc` — Copy env template. `RAILS_MASTER_KEY` is not required for development.
 2. `direnv allow` — Approve the `.envrc` file.
-3. `just setup` — Start services, install deps, seed database. The seed may take a moment, since it creates report records.
-4. `just dev` — Start Rails + Sidekiq. Create reports from the form, PDF generation runs in the background.
+3. `just setup` — Start services, install deps, seed database. The seed creates reports with status `pending` and `failed` (1 failed every 5), enqueues pending reports via Active Job, and exits quickly.
+4. `just dev` — Start Rails + Sidekiq. Pending reports from seeds are processed in the background; create new reports from the form, PDF generation runs in the background.
 
 ```bash
 cp .envrc.sample .envrc
@@ -62,6 +62,8 @@ just dev
 ```
 
 > You can also run `just server` and `just sidekiq` in separate terminals if you prefer.
+>
+> **Seeds:** After `just setup`, pending reports remain enqueued in Redis. Run `just dev` so Sidekiq processes them and generates PDFs in the background.
 
 ## Available commands
 
