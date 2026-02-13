@@ -8,3 +8,8 @@
     to { background-color: var(--color-white); }
   }
 }
+
+/* Hide Turbo's default progress bar (gets stuck with Turbo Streams) */
+.turbo-progress-bar {
+  visibility: hidden;
+}
