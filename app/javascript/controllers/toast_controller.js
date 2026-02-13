@@ -19,6 +19,11 @@ export default class extends Controller {
   }
 
   dismiss() {
+    if (this.timeoutId) {
+      clearTimeout(this.timeoutId)
+      this.timeoutId = null
+    }
+
     this.element.classList.add("translate-x-full")
 
     this.element.addEventListener(
