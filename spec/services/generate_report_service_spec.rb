@@ -81,4 +81,42 @@ RSpec.describe GenerateReportService do
       end
     end
   end
+
+  describe "idempotency" do
+    it "returns early when report is completed without re-running work" do
+      report = create(:report, :completed, report_type: :daily_sales)
+      allow(ReportData::Reports).to receive(:fetch)
+      allow(Grover).to receive(:new)
+
+      result = described_class.new(report: report).call
+
+      expect(result.success?).to be true
+      expect(ReportData::Reports).not_to have_received(:fetch)
+      expect(Grover).not_to have_received(:new)
+    end
+
+    it "returns early when report is failed without re-running work" do
+      report = create(:report, :failed, report_type: :daily_sales)
+      allow(ReportData::Reports).to receive(:fetch)
+      allow(Grover).to receive(:new)
+
+      result = described_class.new(report: report).call
+
+      expect(result.success?).to be true
+      expect(ReportData::Reports).not_to have_received(:fetch)
+      expect(Grover).not_to have_received(:new)
+    end
+
+    it "returns early when report is processing without re-running work" do
+      report = create(:report, :processing, report_type: :daily_sales)
+      allow(ReportData::Reports).to receive(:fetch)
+      allow(Grover).to receive(:new)
+
+      result = described_class.new(report: report).call
+
+      expect(result.success?).to be true
+      expect(ReportData::Reports).not_to have_received(:fetch)
+      expect(Grover).not_to have_received(:new)
+    end
+  end
 end

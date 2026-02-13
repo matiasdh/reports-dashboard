@@ -14,6 +14,9 @@ class GenerateReportService
   end
 
   def call
+    report.reload
+    return success unless report.pending?
+
     report.processing!
     broadcast_report_update!
     fetch_data!
