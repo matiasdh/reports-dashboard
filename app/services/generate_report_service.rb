@@ -1,14 +1,14 @@
-ReportServiceResult = Data.define(:success?, :report, :error) do
-  def self.success(report)
-    new(success?: true, report: report, error: nil)
-  end
-
-  def self.failure(report, error)
-    new(success?: false, report: report, error: error)
-  end
-end
-
 class GenerateReportService
+  Result = Data.define(:success?, :report, :error) do
+    def self.success(report)
+      new(success?: true, report: report, error: nil)
+    end
+
+    def self.failure(report, error)
+      new(success?: false, report: report, error: error)
+    end
+  end
+
   def initialize(report:)
     @report = report
   end
@@ -58,11 +58,11 @@ class GenerateReportService
   end
 
   def success
-    ReportServiceResult.success(report)
+    Result.success(report)
   end
 
   def failure(error)
-    ReportServiceResult.failure(report, error)
+    Result.failure(report, error)
   end
 
   def broadcast_report_update!

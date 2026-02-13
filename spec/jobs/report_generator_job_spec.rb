@@ -10,7 +10,7 @@ RSpec.describe ReportGeneratorJob do
   end
 
   it "calls GenerateReportService when performed" do
-    result = ReportServiceResult.success(report)
+    result = GenerateReportService::Result.success(report)
     service = instance_double(GenerateReportService, call: result)
     allow(GenerateReportService).to receive(:new).with(report: report).and_return(service)
 
