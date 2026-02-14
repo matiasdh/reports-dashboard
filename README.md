@@ -40,8 +40,7 @@ Browser (Turbo/Stimulus)
 
 - Ruby 3.4.1
 - Node.js 22+ (for Grover PDF generation)
-- PostgreSQL 17
-- Redis 7
+- Docker (PostgreSQL 17, Redis 7, and Chrome for PDF generation run via Docker Compose — no local install needed)
 - [direnv](https://direnv.net/) — `brew install direnv`
 - [just](https://github.com/casey/just) — `brew install just`
 
