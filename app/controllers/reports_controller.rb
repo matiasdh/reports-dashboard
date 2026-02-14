@@ -24,6 +24,7 @@ class ReportsController < ApplicationController
 
     if @report.save
       ReportGeneratorJob.perform_later(@report)
+      @pagy, @reports = pagy(:countish, Report.with_associations.order(created_at: :desc))
       flash[:notice] = "Report queued successfully."
     else
       flash[:alert] = @report.errors.full_messages.to_sentence

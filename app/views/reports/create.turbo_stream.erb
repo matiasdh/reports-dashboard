@@ -6,5 +6,4 @@
   <% end %>
 <% end %>
 <%= turbo_stream.replace "report_form", partial: "reports/report_form_section", locals: { report: Report.new, users: @users } %>
-<%= turbo_stream.prepend "reports_items", partial: "reports/report_item", locals: { report: @report } %>
-<%= turbo_stream.remove "reports_empty" %>
+<%= turbo_stream.replace "reports_list", partial: "reports/reports_list_frame", locals: { reports: @reports, pagy: @pagy } %>
