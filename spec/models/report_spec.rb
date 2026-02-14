@@ -41,7 +41,7 @@ RSpec.describe Report, type: :model do
       existing = create(:report)
       duplicate = build(:report, code: existing.code)
       expect(duplicate).not_to be_valid
-      expect(duplicate.errors[:code]).to include("a report of this type has already been generated today")
+      expect(duplicate.errors[:code]).to eq([ "A report of this type has already been generated for this user." ])
     end
   end
 
@@ -122,7 +122,7 @@ RSpec.describe Report, type: :model do
       duplicate = build(:report, user: user, report_type: :daily_sales)
 
       expect(duplicate).not_to be_valid
-      expect(duplicate.errors[:code]).to include("a report of this type has already been generated today")
+      expect(duplicate.errors[:code]).to eq([ "A report of this type has already been generated for this user." ])
     end
 
     it "allows the same report type for different users" do

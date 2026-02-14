@@ -26,5 +26,8 @@ module ReportsDashboard
 
     # Active Storage signed URLs expire after 5 minutes, so shared links become invalid quickly.
     config.active_storage.urls_expire_in = 5.minutes
+
+    # Allow custom full_message format per model/attribute (e.g. to omit attribute name)
+    config.active_model.i18n_customize_full_message = true
   end
 end

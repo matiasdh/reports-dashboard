@@ -52,7 +52,7 @@ RSpec.describe "Reports", type: :request do
 
       expect(response).to redirect_to(reports_path(user_id: user.id, report_type: "daily_sales"))
       follow_redirect!
-      expect(response.body).to include("already been generated today")
+      expect(response.body).to include("already been generated for this user")
     end
 
     it "redirects with an alert for missing report type" do

@@ -29,3 +29,11 @@
 
 en:
   hello: "Hello world"
+  activerecord:
+    errors:
+      models:
+        report:
+          attributes:
+            code:
+              format: "%{message}"
+              taken: "A report of this type has already been generated for this user."
