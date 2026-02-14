@@ -120,6 +120,8 @@ Report data is fetched via `ReportData::Reports.fetch(report_type)`. The current
 
 ## Design Decisions & Trade-offs
 
+- **No user authentication:** Login was intentionally left out of scope for this project. The focus was on testing the report generation flow, Turbo Streams, and PDF generation. Instead of authenticating, the user is selected from a dropdown in the report form. This keeps the demo simple while still allowing reports to be associated with different users.
+
 - **Report uniqueness constraint:** The auto-generated `code` field (`REPORT_TYPE-YYYYMMDD-USERID`) inherently encodes the user, report type, and date. A single unique index on `code` is sufficient to enforce the one-report-per-type-per-user-per-day rule, avoiding the need for a multi-column composite index.
 
 - **User deletion and report retention:** Currently `has_many :reports, dependent: :destroy` is used for simplicity. In production, users should not be hard-deleted because their reports need to be preserved. A soft-delete approach using `paranoia` (`with_deleted` scope) would allow deactivating users while keeping their reports intact.
