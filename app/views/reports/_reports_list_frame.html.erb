@@ -9,7 +9,7 @@
     <div class="flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-3 px-4 py-3 sm:px-6 sm:py-4 border-slate-100 border-t">
       <% if pagy.count.positive? %>
         <p class="text-slate-500 text-sm">
-          Showing <%= pagy.in %> reports from <%= pagy.count %>
+          Showing <%= pagy.in %> reports from approx. <%= pagy.count %>
         </p>
       <% end %>
       <% if pagy.pages > 1 %>
