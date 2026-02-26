@@ -81,7 +81,7 @@ group :test do
   gem "webmock", "~> 3.26"
 end
 
-gem "pagy", "~> 43.2"
+gem "pagy", "~> 43.3"
 gem "tailwindcss-rails", "~> 4.4"
 gem "grover", "~> 1.2"
 gem "rails_icons", "~> 1.6"
